@@ -39,14 +39,11 @@ dependencies {
  */
 // 在这个段落中你可以声明你的build脚本需要的依赖和解析下载该依赖所使用的仓储位置
 buildscript {
-    ext {
-        springBootVersion = '1.4.3.RELEASE'
-    }
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE")
     }
 }
 
@@ -55,7 +52,6 @@ buildscript {
  * apply plugin: 'java' 代表这是一个Java项目，需要使用java插件
  * 如果想生成一个 `Intellij IDEA` 的工程，类似的如果要生成
  * eclipse工程，就写 apply plugin: 'eclipse'
- * 同样的我们要学的是Spring Boot，所以应用Spring Boot插件
  */
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -65,12 +61,6 @@ apply plugin: 'org.springframework.boot'
 // Gradle Wrapper
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
-}
-
-// 在这个段落中你可以声明编译后的Jar文件信息
-jar {
-    baseName = 'todo'
-    version = '0.0.1-SNAPSHOT'
 }
 
 // 在这个段落中你可以声明在哪里可以找到你的项目依赖
@@ -87,5 +77,7 @@ targetCompatibility = 1.8
 // 在这个段落你可以声明你的项目的开发和测试所需的依赖类库
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'com.ibm.watson.developer_cloud', name: 'java-sdk', version: '3.7.2'
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
