@@ -49,6 +49,7 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
+
 /*
  * 在这个段落中你可以声明使用哪些插件
  * apply plugin: 'java' 代表这是一个Java项目，需要使用java插件
@@ -60,6 +61,11 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+
+// Gradle Wrapper
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
+}
 
 // 在这个段落中你可以声明编译后的Jar文件信息
 jar {
