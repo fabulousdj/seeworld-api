@@ -1,0 +1,14 @@
+.idea/
+logs/
+work/
+.gradle/
+build/
+src/main/resources/public/
+active.txt
+src/main/resources/git.properties
+classes/
+src/main/webapp/
+*.DS_Store
+*.iml
+*.ipr
+*.iws
