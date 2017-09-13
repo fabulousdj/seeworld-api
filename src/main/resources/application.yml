@@ -1,0 +1,10 @@
+server:
+  port: 5005
+
+http:
+  port: 8080
+
+watsonCloudService:
+  textToSpeech:
+    username: ed54a35c-c2e2-430b-994f-4dbab60314b6
+    password: i8iFAqdxfBFS
