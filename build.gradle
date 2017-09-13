@@ -41,6 +41,7 @@ dependencies {
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE")
@@ -58,16 +59,12 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
-// Gradle Wrapper
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.0'
-}
-
 // 在这个段落中你可以声明在哪里可以找到你的项目依赖
 repositories {
     // 使用 'jcenter' 作为中心仓储查询解析你的项目依赖。
     // 你可以声明任何 Maven/Ivy/file 类型的依赖类库仓储位置
     mavenCentral()
+    jcenter()
 }
 
 // 在这个段落中你可以声明源文件和目标编译后的Java版本兼容性
@@ -80,4 +77,34 @@ dependencies {
     compile group: 'com.ibm.watson.developer_cloud', name: 'java-sdk', version: '3.7.2'
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+task cleanTempDir(type: Delete) {
+    delete fileTree(dir: 'src/main/resources/public')
+}
+
+clean {
+    dependsOn cleanTempDir
+}
+
+// Gradle Wrapper
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
+}
+
+test {
+    configure {
+        systemProperty "contractTest.environment", System.getProperty("contractTest.environment")
+        systemProperty "apiToken", System.getProperty("apiToken")
+        systemProperty "remoteDriver", System.getProperty("remoteDriver")
+    }
+}
+
+bootRun {
+    configure {
+        systemProperty "application.environment", "dev"
+        systemProperty "spring.profiles.active", "dev"
+        systemProperty "application.home", "."
+    }
+    jvmArgs=["-Dproject.name=${project.name}", "-Dapplication.name=${project.name}", '-Dapplication.environment=dev', '-Dapplication.home=.', '-Xdebug', '-Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=n']
 }
