@@ -8,3 +8,6 @@ watsonCloudService:
   textToSpeech:
     username: ed54a35c-c2e2-430b-994f-4dbab60314b6
     password: i8iFAqdxfBFS
+  speechToText:
+    username: afc9e73c-acf9-40bb-873f-8c0c9db8978f
+    password: MUai6xWLnp0M
