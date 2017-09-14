@@ -10,10 +10,10 @@ import java.util.List;
 
 /**
  * Created by jidai on 9/10/17.
- * Sample API Controller
+ * Text-Speech Conversion API Controller
  */
 @RestController
-@RequestMapping("api")
+@RequestMapping("seeworld/api")
 public class TextSpeechConversionController {
 
     private final ITextSpeechConversionService textSpeechConversionService;
@@ -24,14 +24,8 @@ public class TextSpeechConversionController {
     }
 
     @RequestMapping("/speech-to-text")
-    public List<Integer> getSpeechToTextResult() {
-        List<Integer> sampleIntegers = new ArrayList<>();
-        sampleIntegers.add(1);
-        sampleIntegers.add(0);
-        sampleIntegers.add(0);
-        sampleIntegers.add(8);
-        sampleIntegers.add(6);
-        return sampleIntegers;
+    public String getSpeechToTextResult() {
+        return textSpeechConversionService.getSpeechToTextResult();
     }
 
     @RequestMapping("/text-to-speech")
