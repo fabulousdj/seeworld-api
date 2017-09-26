@@ -11,3 +11,12 @@ watsonCloudService:
   speechToText:
     username: afc9e73c-acf9-40bb-873f-8c0c9db8978f
     password: MUai6xWLnp0M
+  naturalLanguageClassifier:
+    username: a83e4070-0c22-4f09-9dba-19a4ec327bc4
+    password: D4s53H0ZBLvJ
+    id:
+      transportationMethodClassifier: 85dfc9x224-nlc-11264
+      globalInstructionClassifier: 85dfc9x224-nlc-11571
+
+appContext:
+  transportationMethodSelection: sw_trans_method_selection
