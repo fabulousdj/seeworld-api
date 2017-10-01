@@ -55,6 +55,7 @@ buildscript {
  * eclipse工程，就写 apply plugin: 'eclipse'
  */
 apply plugin: 'java'
+apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -79,6 +80,8 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version:'2.6.0'
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 task cleanTempDir(type: Delete) {
@@ -94,14 +97,6 @@ task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
 }
 
-test {
-    configure {
-        systemProperty "contractTest.environment", System.getProperty("contractTest.environment")
-        systemProperty "apiToken", System.getProperty("apiToken")
-        systemProperty "remoteDriver", System.getProperty("remoteDriver")
-    }
-}
-
 bootRun {
     configure {
         systemProperty "application.environment", "dev"
@@ -109,4 +104,9 @@ bootRun {
         systemProperty "application.home", "."
     }
     jvmArgs=["-Dproject.name=${project.name}", "-Dapplication.name=${project.name}", '-Dapplication.environment=dev', '-Dapplication.home=.', '-Xdebug', '-Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=n']
+}
+
+war {
+    baseName = 'seeworld-api'
+    version =  '1.0.0'
 }
