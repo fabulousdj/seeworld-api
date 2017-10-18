@@ -1,9 +1,6 @@
 server:
   port: 5005
 
-http:
-  port: 8080
-
 watsonCloudService:
   textToSpeech:
     username: ed54a35c-c2e2-430b-994f-4dbab60314b6
@@ -17,6 +14,21 @@ watsonCloudService:
     id:
       transportationMethodClassifier: 85dfc9x224-nlc-11264
       globalInstructionClassifier: 85dfc9x224-nlc-11571
+  discovery:
+    endPoint: https://gateway.watsonplatform.net/discovery/api/
+    version: 2017-09-01
+    username: 0b998145-d53a-4f03-9cf0-cde647aca4ed
+    password: Sv63MMyNUF7U
+    environmentId: 4f3bfd84-164e-4763-a7b5-b40381cfa401
+    collections:
+      columbus-OH-US:
+        name: columbus-OH-US
+        id: 3fa9d27c-f9a2-4c6b-9598-cac3705ddc60
+
+destinationCategory:
+  restaurant: sw_dest_category_restaurant
 
 appContext:
+  askingForReview: sw_asking_for_review
+  waitingForDestination: sw_waiting_for_destination
   transportationMethodSelection: sw_trans_method_selection
