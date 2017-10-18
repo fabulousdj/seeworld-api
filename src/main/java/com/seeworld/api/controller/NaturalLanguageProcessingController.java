@@ -31,7 +31,6 @@ public class NaturalLanguageProcessingController {
     }
 
     @CrossOrigin
-    @ApiOperation(value = "Classify User Input", nickname = "Classify User Input")
     @RequestMapping(value = "/classify", method = RequestMethod.GET, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = NaturalLanguageClassificationServiceResponse.class),
