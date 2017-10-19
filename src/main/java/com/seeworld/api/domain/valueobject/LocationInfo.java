@@ -53,4 +53,8 @@ public class LocationInfo {
     public String buildCollectionName() {
         return city.toLowerCase() + '-' + state.toUpperCase() + '-' + country.toUpperCase();
     }
+
+    public String buildQueryText() {
+        return name.toLowerCase() + ' ' + address.toLowerCase();
+    }
 }

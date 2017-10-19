@@ -2,12 +2,15 @@ package com.seeworld.api.domain.service.impl;
 
 import com.google.gson.Gson;
 import com.ibm.watson.developer_cloud.discovery.v1.Discovery;
-import com.ibm.watson.developer_cloud.discovery.v1.model.document.UpdateDocumentRequest;
-import com.ibm.watson.developer_cloud.discovery.v1.model.document.UpdateDocumentResponse;
+import com.ibm.watson.developer_cloud.discovery.v1.model.document.CreateDocumentRequest;
+import com.ibm.watson.developer_cloud.discovery.v1.model.document.CreateDocumentResponse;
+import com.ibm.watson.developer_cloud.discovery.v1.model.query.QueryRequest;
+import com.ibm.watson.developer_cloud.discovery.v1.model.query.QueryResponse;
 import com.ibm.watson.developer_cloud.http.HttpMediaType;
 import com.seeworld.api.dictionary.DiscoveryCollectionIdDictionary;
 import com.seeworld.api.domain.service.IUserReviewsService;
 import com.seeworld.api.domain.valueobject.GetInsightsServiceResponse;
+import com.seeworld.api.domain.valueobject.LocationInfo;
 import com.seeworld.api.domain.valueobject.UserReview;
 import com.seeworld.api.domain.valueobject.PostUserReviewServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.UUID;
 
 @Component
 public class UserReviewService implements IUserReviewsService {
@@ -35,8 +37,19 @@ public class UserReviewService implements IUserReviewsService {
     private DiscoveryCollectionIdDictionary collectionIdDictionary;
 
     @Override
-    public GetInsightsServiceResponse getInsights(String destination) {
-        return null;
+    public GetInsightsServiceResponse getInsights(LocationInfo destination) {
+        Discovery discovery = new Discovery(discoveryServiceVersion);
+        discovery.setEndPoint(discoveryServiceEndPoint);
+        discovery.setUsernameAndPassword(discoveryServiceUsername, discoveryServicePassword);
+        String environmentId = discoveryServiceEnvironmentId;
+        String collectionName = destination.buildCollectionName();
+        String collectionId = collectionIdDictionary.getCollectionIdByName(collectionName);
+
+        QueryRequest.Builder queryBuilder = new QueryRequest.Builder(environmentId, collectionId);
+        queryBuilder.query("location.name:\"" + destination.getName() + "\",location.address:\"" + destination.getAddress() + "\"");
+        queryBuilder.aggregation("term(enriched_review.sentiment.document.label)");
+        QueryResponse queryResponse = discovery.query(queryBuilder.build()).execute();
+        return new GetInsightsServiceResponse(queryResponse.getAggregations());
     }
 
     @Override
@@ -47,14 +60,13 @@ public class UserReviewService implements IUserReviewsService {
         String environmentId = discoveryServiceEnvironmentId;
         String collectionName = review.getLocation().buildCollectionName();
         String collectionId = collectionIdDictionary.getCollectionIdByName(collectionName);
-        String documentId = UUID.randomUUID().toString();
         Gson gson = new Gson();
-        String updatedDocumentJson = gson.toJson(review, UserReview.class);
-        InputStream updatedDocumentStream = new ByteArrayInputStream(updatedDocumentJson.getBytes());
+        String documentJson = gson.toJson(review, UserReview.class);
+        InputStream documentStream = new ByteArrayInputStream(documentJson.getBytes());
 
-        UpdateDocumentRequest.Builder updateBuilder = new UpdateDocumentRequest.Builder(environmentId, collectionId, documentId);
-        updateBuilder.inputStream(updatedDocumentStream, HttpMediaType.APPLICATION_JSON);
-        UpdateDocumentResponse updateResponse = discovery.updateDocument(updateBuilder.build()).execute();
-        return new PostUserReviewServiceResponse(updateResponse);
+        CreateDocumentRequest.Builder builder = new CreateDocumentRequest.Builder(environmentId, collectionId);
+        builder.file(documentStream, HttpMediaType.APPLICATION_JSON);
+        CreateDocumentResponse createDocumentResponse = discovery.createDocument(builder.build()).execute();
+        return new PostUserReviewServiceResponse(createDocumentResponse);
     }
 }
