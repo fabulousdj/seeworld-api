@@ -2,7 +2,7 @@ package com.seeworld.api.domain.service.helper;
 
 import com.ibm.watson.developer_cloud.natural_language_classifier.v1.NaturalLanguageClassifier;
 import com.ibm.watson.developer_cloud.natural_language_classifier.v1.model.Classification;
-import com.seeworld.api.dictionary.ClassifierIdDictionary;
+import com.seeworld.api.dictionary.AppStateClassifierIdDictionary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +13,10 @@ public class NaturalLanguageClassifierHelper {
     private static String CLASSIFIED_RESULT_NORMAL = "normal";
 
     @Autowired
-    private ClassifierIdDictionary classifierIdDictionary;
+    private AppStateClassifierIdDictionary appStateClassifierIdDictionary;
 
     public String getClassifiedResultByAppState(NaturalLanguageClassifier service, String appState, String input) {
-        List<String> classifierList = classifierIdDictionary.getClassifierIdByAppState(appState);
+        List<String> classifierList = appStateClassifierIdDictionary.getClassifierIdByAppState(appState);
         String result = CLASSIFIED_RESULT_NORMAL;
         int index = 0;
         while (result.equals(CLASSIFIED_RESULT_NORMAL)) {
