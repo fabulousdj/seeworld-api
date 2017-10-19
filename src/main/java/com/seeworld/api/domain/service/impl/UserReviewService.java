@@ -8,11 +8,9 @@ import com.ibm.watson.developer_cloud.discovery.v1.model.query.QueryRequest;
 import com.ibm.watson.developer_cloud.discovery.v1.model.query.QueryResponse;
 import com.ibm.watson.developer_cloud.http.HttpMediaType;
 import com.seeworld.api.dictionary.DiscoveryCollectionIdDictionary;
+import com.seeworld.api.domain.mapper.GetInsightsServiceResponseMapper;
 import com.seeworld.api.domain.service.IUserReviewsService;
-import com.seeworld.api.domain.valueobject.GetInsightsServiceResponse;
-import com.seeworld.api.domain.valueobject.LocationInfo;
-import com.seeworld.api.domain.valueobject.UserReview;
-import com.seeworld.api.domain.valueobject.PostUserReviewServiceResponse;
+import com.seeworld.api.domain.valueobject.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -34,6 +32,8 @@ public class UserReviewService implements IUserReviewsService {
     private String discoveryServiceEnvironmentId;
 
     @Autowired
+    private GetInsightsServiceResponseMapper getInsightsServiceResponseMapper;
+    @Autowired
     private DiscoveryCollectionIdDictionary collectionIdDictionary;
 
     @Override
@@ -49,7 +49,7 @@ public class UserReviewService implements IUserReviewsService {
         queryBuilder.query("location.name:\"" + destination.getName() + "\",location.address:\"" + destination.getAddress() + "\"");
         queryBuilder.aggregation("term(enriched_review.sentiment.document.label)");
         QueryResponse queryResponse = discovery.query(queryBuilder.build()).execute();
-        return new GetInsightsServiceResponse(queryResponse.getAggregations());
+        return getInsightsServiceResponseMapper.mapGetInsightsServiceResponse(queryResponse);
     }
 
     @Override

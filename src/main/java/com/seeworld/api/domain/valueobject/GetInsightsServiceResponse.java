@@ -4,24 +4,24 @@ import com.ibm.watson.developer_cloud.discovery.v1.model.query.Aggregation;
 
 import java.util.List;
 
-public class GetInsightsServiceResponse implements IResponseMessage<List<Aggregation>> {
+public class GetInsightsServiceResponse implements IResponseMessage<UserReviewInsights> {
 
     private final ErrorDetails errorDetails;
-    private List<Aggregation> aggregations;
+    private UserReviewInsights insights;
 
-    public GetInsightsServiceResponse(List<Aggregation> aggregations) {
-        this.aggregations = aggregations;
+    public GetInsightsServiceResponse(UserReviewInsights insights) {
+        this.insights = insights;
         this.errorDetails = null;
     }
 
     public GetInsightsServiceResponse(ErrorDetails errorDetails) {
-        aggregations = null;
+        insights = null;
         this.errorDetails = errorDetails;
     }
 
     @Override
-    public List<Aggregation> getValue() {
-        return aggregations;
+    public UserReviewInsights getValue() {
+        return insights;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class GetInsightsServiceResponse implements IResponseMessage<List<Aggrega
         return errorDetails == null;
     }
 
-    public void setAggregations(List<Aggregation> aggregations) {
-        this.aggregations = aggregations;
+    public void setInsights(UserReviewInsights aggregations) {
+        this.insights = insights;
     }
 }
