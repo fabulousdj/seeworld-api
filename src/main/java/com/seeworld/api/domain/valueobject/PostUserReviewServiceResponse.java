@@ -1,13 +1,13 @@
 package com.seeworld.api.domain.valueobject;
 
-import com.ibm.watson.developer_cloud.discovery.v1.model.document.UpdateDocumentResponse;
+import com.ibm.watson.developer_cloud.discovery.v1.model.document.CreateDocumentResponse;
 
-public class PostUserReviewServiceResponse implements IResponseMessage<UpdateDocumentResponse>  {
+public class PostUserReviewServiceResponse implements IResponseMessage<CreateDocumentResponse>  {
 
     private final ErrorDetails errorDetails;
-    private UpdateDocumentResponse response;
+    private CreateDocumentResponse response;
 
-    public PostUserReviewServiceResponse(UpdateDocumentResponse response) {
+    public PostUserReviewServiceResponse(CreateDocumentResponse response) {
         this.response = response;
         this.errorDetails = null;
     }
@@ -16,12 +16,12 @@ public class PostUserReviewServiceResponse implements IResponseMessage<UpdateDoc
         this.errorDetails = errorDetails;
     }
 
-    public void setResponse(UpdateDocumentResponse response) {
+    public void setResponse(CreateDocumentResponse response) {
         this.response = response;
     }
 
     @Override
-    public UpdateDocumentResponse getValue() {
+    public CreateDocumentResponse getValue() {
         return response;
     }
 

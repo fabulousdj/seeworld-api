@@ -1,23 +1,27 @@
 package com.seeworld.api.domain.valueobject;
 
-public class GetInsightsServiceResponse implements IResponseMessage<Boolean> {
+import com.ibm.watson.developer_cloud.discovery.v1.model.query.Aggregation;
+
+import java.util.List;
+
+public class GetInsightsServiceResponse implements IResponseMessage<List<Aggregation>> {
 
     private final ErrorDetails errorDetails;
-    private Boolean isSuccessful;
+    private List<Aggregation> aggregations;
 
-    public GetInsightsServiceResponse(Boolean isSuccessful) {
-        this.isSuccessful = isSuccessful;
+    public GetInsightsServiceResponse(List<Aggregation> aggregations) {
+        this.aggregations = aggregations;
         this.errorDetails = null;
     }
 
     public GetInsightsServiceResponse(ErrorDetails errorDetails) {
-        isSuccessful = false;
+        aggregations = null;
         this.errorDetails = errorDetails;
     }
 
     @Override
-    public Boolean getValue() {
-        return isSuccessful;
+    public List<Aggregation> getValue() {
+        return aggregations;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class GetInsightsServiceResponse implements IResponseMessage<Boolean> {
         return errorDetails == null;
     }
 
-    public void setIsSuccessful(Boolean isSuccessful) {
-        this.isSuccessful = isSuccessful;
+    public void setAggregations(List<Aggregation> aggregations) {
+        this.aggregations = aggregations;
     }
 }
