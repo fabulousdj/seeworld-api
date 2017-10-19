@@ -2,10 +2,8 @@ package com.seeworld.api.controller;
 
 import com.seeworld.api.domain.mapper.ResponseEntityMapper;
 import com.seeworld.api.domain.service.INaturalLanguageProcessingService;
-import com.seeworld.api.domain.valueobject.AppContext;
 import com.seeworld.api.domain.valueobject.IResponseMessage;
 import com.seeworld.api.domain.valueobject.NaturalLanguageClassificationServiceResponse;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +35,9 @@ public class NaturalLanguageProcessingController {
             @ApiResponse(code = 500, message = "Error", response = NaturalLanguageClassificationServiceResponse.class)})
     public ResponseEntity<? extends IResponseMessage> classify(
             @RequestParam("input") final String input,
-            @RequestBody(required = false) final AppContext appContext) {
+            @RequestParam("state") final String appState) {
         NaturalLanguageClassificationServiceResponse response
-                = naturalLanguageProcessingService.classify(input, appContext);
+                = naturalLanguageProcessingService.classify(input, appState);
         return responseEntityMapper.mapWithRequestId(response);
     }
 }

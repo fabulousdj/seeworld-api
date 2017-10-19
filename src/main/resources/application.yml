@@ -12,8 +12,11 @@ watsonCloudService:
     username: a83e4070-0c22-4f09-9dba-19a4ec327bc4
     password: D4s53H0ZBLvJ
     id:
-      transportationMethodClassifier: 85dfc9x224-nlc-11264
-      globalInstructionClassifier: 85dfc9x224-nlc-11571
+      destinationChoiceClassifier: 1e0d8ex232-nlc-17207
+      postUserReviewClassifier: ebd2f7x230-nlc-59868
+      booleanClassifier: ebd15ex229-nlc-59975
+      transportationMethodClassifier: ebd2f7x230-nlc-59789
+      globalInstructionClassifier: ebd2f7x230-nlc-59802
   discovery:
     endPoint: https://gateway.watsonplatform.net/discovery/api/
     version: 2017-09-01
@@ -29,6 +32,7 @@ destinationCategory:
   restaurant: sw_dest_category_restaurant
 
 appContext:
-  askingForReview: sw_asking_for_review
+  booleanClassification: sw_boolean_classification
+  waitingForUserReview: sw_waiting_for_user_review
   waitingForDestination: sw_waiting_for_destination
   transportationMethodSelection: sw_trans_method_selection
