@@ -4,6 +4,7 @@ import com.seeworld.api.domain.mapper.ResponseEntityMapper;
 import com.seeworld.api.domain.service.INaturalLanguageProcessingService;
 import com.seeworld.api.domain.valueobject.IResponseMessage;
 import com.seeworld.api.domain.valueobject.NaturalLanguageClassificationServiceResponse;
+import com.seeworld.api.domain.valueobject.NaturalLanguageUnderstandingServiceResponse;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,18 @@ public class NaturalLanguageProcessingController {
             @RequestParam("state") final String appState) {
         NaturalLanguageClassificationServiceResponse response
                 = naturalLanguageProcessingService.classify(input, appState);
+        return responseEntityMapper.mapWithRequestId(response);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/understand-dest", method = RequestMethod.GET, produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = NaturalLanguageUnderstandingServiceResponse.class),
+            @ApiResponse(code = 500, message = "Error", response = NaturalLanguageClassificationServiceResponse.class)})
+    public ResponseEntity<? extends IResponseMessage> understandDestination(
+            @RequestParam("input") final String input) {
+        NaturalLanguageUnderstandingServiceResponse response
+                = naturalLanguageProcessingService.understandDestination(input);
         return responseEntityMapper.mapWithRequestId(response);
     }
 }

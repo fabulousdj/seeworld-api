@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
  * Created by jidai on 9/19/17.
  * Response Entity mapper to map the response
  */
+
 @Component
 public class ResponseEntityMapper {
 
