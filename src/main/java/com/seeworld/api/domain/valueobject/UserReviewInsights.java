@@ -1,6 +1,6 @@
 package com.seeworld.api.domain.valueobject;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
@@ -9,18 +9,18 @@ public class UserReviewInsights {
     private static int SECOND_DECIMAL_PLACE = 2;
 
     private long count;
-    @SerializedName("positive")
+    @JsonProperty("positive")
     private float positivePercentage;
-    @SerializedName("negative")
+    @JsonProperty("negative")
     private float negativePercentage;
-    @SerializedName("neutral")
+    @JsonProperty("neutral")
     private float neutralPercentage;
 
     public UserReviewInsights(long count, long positiveCount, long negativeCount, long neutralCount) {
         this.count = count;
-        this.positivePercentage = round(((float)positiveCount) / count, 2);
-        this.negativePercentage = round(((float)negativeCount) / count, 2);
-        this.neutralPercentage = round(((float)neutralCount) / count, 2);
+        this.positivePercentage = round(((float)positiveCount) / count, SECOND_DECIMAL_PLACE);
+        this.negativePercentage = round(((float)negativeCount) / count, SECOND_DECIMAL_PLACE);
+        this.neutralPercentage = round(((float)neutralCount) / count, SECOND_DECIMAL_PLACE);
     }
 
     public static float round(float d, int decimalPlace) {

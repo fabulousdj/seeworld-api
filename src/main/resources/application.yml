@@ -8,6 +8,10 @@ watsonCloudService:
   speechToText:
     username: afc9e73c-acf9-40bb-873f-8c0c9db8978f
     password: MUai6xWLnp0M
+  conversation:
+    username: 12a93e8e-c5de-42f0-b136-15f9bcb69cb4
+    password: IdJxGCqJaGuS
+    workspaceId: c5859796-664f-4cbf-a30d-8e9e3732e182
   naturalLanguageClassifier:
     username: a83e4070-0c22-4f09-9dba-19a4ec327bc4
     password: D4s53H0ZBLvJ
