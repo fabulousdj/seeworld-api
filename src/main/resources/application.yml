@@ -17,6 +17,9 @@ watsonCloudService:
       booleanClassifier: ebd15ex229-nlc-59975
       transportationMethodClassifier: ebd2f7x230-nlc-59789
       globalInstructionClassifier: ebd2f7x230-nlc-59802
+  naturalLanguageUnderstanding:
+    username: 2cac0e79-e8d3-47a4-b028-b2dbed61580e
+    password: 5AG5O55zrVKr
   discovery:
     endPoint: https://gateway.watsonplatform.net/discovery/api/
     version: 2017-09-01
