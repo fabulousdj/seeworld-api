@@ -22,7 +22,7 @@ public class ConversationServiceResponseMapper {
         ObjectMapper systemContextMapper = new ObjectMapper();
         ConversationSystemContext systemContext = systemContextMapper.convertValue(
                 messageResponse.getContext().get("system"), ConversationSystemContext.class);
-        String intent = messageResponse.getIntents().get(0).getIntent();
+        String intent = messageResponse.getIntents().size() > 0 ? messageResponse.getIntents().get(0).getIntent() : "";
         List<String> responses = messageResponse.getText();
         return new ConversationResponse(systemContext, intent, responses);
     }

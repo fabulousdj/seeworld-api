@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ConversationResponse {
 
-    @JsonProperty("systemContext")
+    @JsonProperty("system")
     private ConversationSystemContext systemContext;
     @JsonProperty("intent")
     private String intent;
