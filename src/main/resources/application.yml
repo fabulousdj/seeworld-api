@@ -1,6 +1,16 @@
 server:
   port: 5005
 
+googlePlacesApi:
+  apiKey: AIzaSyDGt8FHoLLY1MwkWfQ556C9hyiMtLOlgEo
+  placeAutocomplete:
+    endpoint: https://maps.googleapis.com/maps/api/place/autocomplete/json
+  placeSearch:
+    endpoint: https://maps.googleapis.com/maps/api/place/nearbysearch/json
+  placeDetails:
+    endpoint: https://maps.googleapis.com/maps/api/place/details/json
+
+
 watsonCloudService:
   textToSpeech:
     username: ed54a35c-c2e2-430b-994f-4dbab60314b6
