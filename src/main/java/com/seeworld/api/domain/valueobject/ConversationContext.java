@@ -3,12 +3,10 @@ package com.seeworld.api.domain.valueobject;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
 @Component
 public class ConversationContext {
     @JsonProperty("ets")
-    private String eta;
+    private String info;
     @JsonProperty("previous")
     private String previousDestination;
     @JsonProperty("prev_dest")
@@ -21,17 +19,21 @@ public class ConversationContext {
     private String weatherInfo;
     @JsonProperty("time")
     private String timeInfo;
+    @JsonProperty("address")
+    private String address;
+    @JsonProperty("verifyAdd")
+    private boolean shouldVerifyAddress;
     @JsonProperty("conversation_id")
     private String conversationId;
     @JsonProperty("system")
     private ConversationSystemContext system;
 
-    public String getEta() {
-        return eta;
+    public String getInfo() {
+        return info;
     }
 
-    public void setEta(String eta) {
-        this.eta = eta;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public String getPreviousDestination() {
@@ -96,5 +98,21 @@ public class ConversationContext {
 
     public void setSystem(ConversationSystemContext system) {
         this.system = system;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isShouldVerifyAddress() {
+        return shouldVerifyAddress;
+    }
+
+    public void setShouldVerifyAddress(boolean shouldVerifyAddress) {
+        this.shouldVerifyAddress = shouldVerifyAddress;
     }
 }
