@@ -2,9 +2,6 @@ package com.seeworld.api.domain.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
-import com.ibm.watson.developer_cloud.discovery.v1.model.query.NestableAggregationResult;
-import com.ibm.watson.developer_cloud.discovery.v1.model.query.QueryResponse;
-import com.ibm.watson.developer_cloud.discovery.v1.model.query.Term;
 import com.seeworld.api.domain.valueobject.*;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +16,12 @@ public class ConversationServiceResponseMapper {
     }
 
     private ConversationResponse buildConversationResponse(MessageResponse messageResponse) {
-        ObjectMapper systemContextMapper = new ObjectMapper();
-        ConversationSystemContext systemContext = systemContextMapper.convertValue(
+        ObjectMapper objectMapper = new ObjectMapper();
+        ConversationSystemContext systemContext = objectMapper.convertValue(
                 messageResponse.getContext().get("system"), ConversationSystemContext.class);
-        String intent = messageResponse.getIntents().size() > 0 ? messageResponse.getIntents().get(0).getIntent() : "";
+        String nodeName = (String) messageResponse.getContext().get("node_name");
         List<String> responses = messageResponse.getText();
-        return new ConversationResponse(systemContext, intent, responses);
+        return new ConversationResponse(systemContext, nodeName, responses);
     }
 
 }
