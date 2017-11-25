@@ -4,5 +4,5 @@ import com.seeworld.api.domain.valueobject.ConversationServiceResponse;
 import com.seeworld.api.domain.valueobject.ConversationContext;
 
 public interface IConversationService {
-    ConversationServiceResponse sendMessage(String input, ConversationContext context);
+    ConversationServiceResponse sendMessage(ConversationContext context);
 }

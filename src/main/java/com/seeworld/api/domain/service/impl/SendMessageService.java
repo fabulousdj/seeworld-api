@@ -28,14 +28,14 @@ public class SendMessageService implements IConversationService {
     ConversationServiceResponseMapper conversationServiceResponseMapper;
 
     @Override
-    public ConversationServiceResponse sendMessage(String input, ConversationContext context) {
+    public ConversationServiceResponse sendMessage(ConversationContext context) {
         ConversationService conversationService = new ConversationService(ConversationService.VERSION_DATE_2017_02_03);
         conversationService.setUsernameAndPassword(conversationServiceUsername, conversationServicePassword);
         ObjectMapper contextMapper = new ObjectMapper();
         Map<String, Object> contextMap = contextMapper.convertValue(context, Map.class);
 
         MessageRequest newMessage = new MessageRequest.Builder()
-                .inputText(input).context(contextMap).build();
+                .inputText(context.getInput()).context(contextMap).build();
 
         MessageResponse response = conversationService.message(workspaceId, newMessage).execute();
         return conversationServiceResponseMapper.mapConversationServiceResponse(response);

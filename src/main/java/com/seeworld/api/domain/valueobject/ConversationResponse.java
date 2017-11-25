@@ -1,7 +1,6 @@
 package com.seeworld.api.domain.valueobject;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -9,14 +8,14 @@ public class ConversationResponse {
 
     @JsonProperty("system")
     private ConversationSystemContext systemContext;
-    @JsonProperty("intent")
-    private String intent;
+    @JsonProperty("nodeName")
+    private String nodeName;
     @JsonProperty("response")
     private List<String> response;
 
-    public ConversationResponse(ConversationSystemContext systemContext, String intent, List<String> response) {
+    public ConversationResponse(ConversationSystemContext systemContext, String nodeName, List<String> response) {
         this.systemContext = systemContext;
-        this.intent = intent;
+        this.nodeName = nodeName;
         this.response = response;
     }
 
@@ -28,12 +27,12 @@ public class ConversationResponse {
         this.systemContext = systemContext;
     }
 
-    public String getIntent() {
-        return intent;
+    public String getNodeName() {
+        return nodeName;
     }
 
-    public void setIntent(String intent) {
-        this.intent = intent;
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
     }
 
     public List<String> getResponse() {

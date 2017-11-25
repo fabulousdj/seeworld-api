@@ -36,10 +36,9 @@ public class ConversationController {
             @ApiResponse(code = 200, message = "Success", response = ConversationServiceResponse.class),
             @ApiResponse(code = 500, message = "Error", response = ConversationServiceResponse.class)})
     public ResponseEntity<? extends IResponseMessage> sendMessage(
-            @RequestParam("input") final String input,
             @RequestBody final ConversationContext context
             ) {
-        ConversationServiceResponse response = conversationService.sendMessage(input, context);
+        ConversationServiceResponse response = conversationService.sendMessage(context);
         return responseEntityMapper.mapWithRequestId(response);
     }
 }
