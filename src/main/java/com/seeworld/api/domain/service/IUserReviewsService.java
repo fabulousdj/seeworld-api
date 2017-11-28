@@ -6,6 +6,6 @@ import com.seeworld.api.domain.valueobject.UserReview;
 import com.seeworld.api.domain.valueobject.PostUserReviewServiceResponse;
 
 public interface IUserReviewsService {
-    GetInsightsServiceResponse getInsights(PlaceInfo destination);
+    GetInsightsServiceResponse getInsights(String placeId);
     PostUserReviewServiceResponse postReview(UserReview review);
 }

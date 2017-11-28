@@ -1,6 +1,7 @@
 package com.seeworld.api.domain.valueobject;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.stereotype.Component;
 
 public class PlaceInfo {
     @JsonProperty("name")
@@ -11,6 +12,8 @@ public class PlaceInfo {
     private String placeId;
     @JsonProperty("geo_location")
     private GeoLocation geoLocation;
+
+    public PlaceInfo() {}
 
     public PlaceInfo(String name, String address, String placeId, GeoLocation geoLocation) {
         this.name = name;

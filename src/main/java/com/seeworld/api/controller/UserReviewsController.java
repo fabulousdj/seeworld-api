@@ -27,13 +27,13 @@ public class UserReviewsController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/get-insights", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/get-insights", method = RequestMethod.GET, produces = "application/json")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = GetInsightsServiceResponse.class),
             @ApiResponse(code = 500, message = "Error", response = GetInsightsServiceResponse.class)})
     public ResponseEntity<? extends IResponseMessage> getInsights(
-            @RequestBody final PlaceInfo destination) {
-        GetInsightsServiceResponse response = userReviewsService.getInsights(destination);
+            @RequestParam("id") final String placeId) {
+        GetInsightsServiceResponse response = userReviewsService.getInsights(placeId);
         return responseEntityMapper.mapWithRequestId(response);
     }
 

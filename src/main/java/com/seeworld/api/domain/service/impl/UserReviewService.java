@@ -39,7 +39,7 @@ public class UserReviewService implements IUserReviewsService {
     private DiscoveryCollectionIdDictionary collectionIdDictionary;
 
     @Override
-    public GetInsightsServiceResponse getInsights(PlaceInfo destination) {
+    public GetInsightsServiceResponse getInsights(String placeId) {
         Discovery discovery = new Discovery(discoveryServiceVersion);
         discovery.setEndPoint(discoveryServiceEndPoint);
         discovery.setUsernameAndPassword(discoveryServiceUsername, discoveryServicePassword);
@@ -47,7 +47,7 @@ public class UserReviewService implements IUserReviewsService {
         String collectionId = collectionIdDictionary.getCollectionIdByName(collectionName);
 
         QueryRequest.Builder queryBuilder = new QueryRequest.Builder(environmentId, collectionId);
-        queryBuilder.query("location.name:\"" + destination.getName() + "\",location.address:\"" + destination.getAddress() + "\"");
+        queryBuilder.query("location.placeId::\"" + placeId + "\"");
         queryBuilder.aggregation("term(enriched_review.sentiment.document.label)");
         QueryResponse queryResponse = discovery.query(queryBuilder.build()).execute();
         return getInsightsServiceResponseMapper.mapGetInsightsServiceResponse(queryResponse);
