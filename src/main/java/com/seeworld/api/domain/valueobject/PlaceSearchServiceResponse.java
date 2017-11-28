@@ -2,13 +2,13 @@ package com.seeworld.api.domain.valueobject;
 
 import java.util.List;
 
-public class PlaceSearchServiceResponse implements IResponseMessage<List<String>>  {
+public class PlaceSearchServiceResponse implements IResponseMessage<List<PlaceInfo>>  {
 
     private final ErrorDetails errorDetails;
-    private List<String> placeIds;
+    private List<PlaceInfo> placeSearchResults;
 
-    public PlaceSearchServiceResponse(List<String> placeIds) {
-        this.placeIds = placeIds;
+    public PlaceSearchServiceResponse(List<PlaceInfo> placeSearchResults) {
+        this.placeSearchResults = placeSearchResults;
         this.errorDetails = null;
     }
 
@@ -16,13 +16,13 @@ public class PlaceSearchServiceResponse implements IResponseMessage<List<String>
         this.errorDetails = errorDetails;
     }
 
-    public void setPlaceIds(List<String> placeIds) {
-        this.placeIds = placeIds;
+    public void setPlaceSearchResults(List<PlaceInfo> placeSearchResults) {
+        this.placeSearchResults = placeSearchResults;
     }
 
     @Override
-    public List<String> getValue() {
-        return placeIds;
+    public List<PlaceInfo> getValue() {
+        return placeSearchResults;
     }
 
     @Override

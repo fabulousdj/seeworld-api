@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,37 +18,52 @@ import java.util.Map;
 @Component
 public class PlaceSearchService implements IPlaceSearchService {
 
+    private static int SEARCH_RADIUS = 5000;
+
     @Value("${googlePlacesApi.apiKey}")
-    private String apikey;
-    @Value("${googlePlacesApi.placeAutocomplete.endpoint}")
-    private String placeAutocompleteEndpoint;
+    private String apiKey;
+    @Value("${googlePlacesApi.placeSearch.endpoint}")
+    private String placeSearchEndpoint;
     @Value("${googlePlacesApi.placeDetails.endpoint}")
     private String placeDetailsEndpoint;
 
     @Override
-    public PlaceSearchServiceResponse search(String input, String location) {
+    public PlaceSearchServiceResponse search(String input, float latitude, float longitude) {
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromUriString(placeSearchEndpoint)
+                // Add query parameter
+                .queryParam("query", input)
+                .queryParam("location", latitude + "," + longitude)
+                .queryParam("radius", SEARCH_RADIUS)
+                .queryParam("language", "en_US")
+                .queryParam("key", apiKey);
+
         RestTemplate restTemplate = new RestTemplate();
-        String requestUrl = placeAutocompleteEndpoint + "?input=" + input + "&location=" + location + "&language=en_US" + "&key=" + apikey;
-        ResponseEntity<Map> response = restTemplate.getForEntity(requestUrl, Map.class);
+        ResponseEntity<Map> response = restTemplate.getForEntity(builder.toUriString(), Map.class);
 
         if(response.getStatusCode() == HttpStatus.BAD_REQUEST){
             return new PlaceSearchServiceResponse(new ErrorDetails(SystemEvent.HYSTRIX_BAD_REQUEST_ERROR.getId(),
-                    "Google Places API autocomplete service bad request."));
+                    "Google Places API place search service bad request."));
         }
 
-        List<String> placeIds = getPlaceIds(response.getBody());
-        return new PlaceSearchServiceResponse(placeIds);
+        List<PlaceInfo> placeSearchResults = getPlaceDetails(response.getBody());
+        return new PlaceSearchServiceResponse(placeSearchResults);
     }
 
-    private List<String> getPlaceIds(Map responseBody) {
-        List<String> placeIds = new ArrayList<>();
+    private List<PlaceInfo> getPlaceDetails(Map responseBody) {
+        List<PlaceInfo> placeSearchResults = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
-        List predictions = objectMapper.convertValue(responseBody.get("predictions"), List.class);
-        for (Object obj : predictions) {
-            Map<String, Object> prediction = objectMapper.convertValue(obj, Map.class);
-            String placeId = (String) prediction.get("place_id");
-            placeIds.add(placeId);
+        List predictions = objectMapper.convertValue(responseBody.get("results"), List.class);
+        for (Object prediction : predictions) {
+            Map placeInfo = (Map)prediction;
+            String address = (String) placeInfo.get("formatted_address");
+            String name = (String) placeInfo.get("name");
+            String placeId = (String) placeInfo.get("place_id");
+            Map geometry = (Map) placeInfo.get("geometry");
+            GeoLocation geoLocation = objectMapper.convertValue(geometry.get("location"), GeoLocation.class);
+            PlaceInfo place = new PlaceInfo(name, address, placeId, geoLocation);
+            placeSearchResults.add(place);
         }
-        return placeIds;
+        return placeSearchResults;
     }
 }

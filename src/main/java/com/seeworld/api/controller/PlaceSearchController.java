@@ -31,9 +31,10 @@ public class PlaceSearchController {
             @ApiResponse(code = 500, message = "Error", response = PlaceSearchServiceResponse.class)})
     public ResponseEntity<? extends IResponseMessage> classify(
             @RequestParam("input") final String input,
-            @RequestParam("input") final String location) {
+            @RequestParam("lat") final float latitude,
+            @RequestParam("lng") final float longitude) {
         PlaceSearchServiceResponse response
-                = placeSearchService.search(input, location);
+                = placeSearchService.search(input, latitude, longitude);
         return responseEntityMapper.mapWithRequestId(response);
     }
 }

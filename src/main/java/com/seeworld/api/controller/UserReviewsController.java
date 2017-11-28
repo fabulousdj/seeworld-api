@@ -32,7 +32,7 @@ public class UserReviewsController {
             @ApiResponse(code = 200, message = "Success", response = GetInsightsServiceResponse.class),
             @ApiResponse(code = 500, message = "Error", response = GetInsightsServiceResponse.class)})
     public ResponseEntity<? extends IResponseMessage> getInsights(
-            @RequestBody final LocationInfo destination) {
+            @RequestBody final PlaceInfo destination) {
         GetInsightsServiceResponse response = userReviewsService.getInsights(destination);
         return responseEntityMapper.mapWithRequestId(response);
     }
