@@ -30,6 +30,8 @@ public class UserReviewService implements IUserReviewsService {
     private String discoveryServiceEndPoint;
     @Value("${watsonCloudService.discovery.environmentId}")
     private String discoveryServiceEnvironmentId;
+    @Value("${watsonCloudService.discovery.collections.columbus-OH-US.name}")
+    private String collectionName;
 
     @Autowired
     private GetInsightsServiceResponseMapper getInsightsServiceResponseMapper;
@@ -37,16 +39,15 @@ public class UserReviewService implements IUserReviewsService {
     private DiscoveryCollectionIdDictionary collectionIdDictionary;
 
     @Override
-    public GetInsightsServiceResponse getInsights(LocationInfo destination) {
+    public GetInsightsServiceResponse getInsights(String placeId) {
         Discovery discovery = new Discovery(discoveryServiceVersion);
         discovery.setEndPoint(discoveryServiceEndPoint);
         discovery.setUsernameAndPassword(discoveryServiceUsername, discoveryServicePassword);
         String environmentId = discoveryServiceEnvironmentId;
-        String collectionName = destination.buildCollectionName();
         String collectionId = collectionIdDictionary.getCollectionIdByName(collectionName);
 
         QueryRequest.Builder queryBuilder = new QueryRequest.Builder(environmentId, collectionId);
-        queryBuilder.query("location.name:\"" + destination.getName() + "\",location.address:\"" + destination.getAddress() + "\"");
+        queryBuilder.query("location.placeId::\"" + placeId + "\"");
         queryBuilder.aggregation("term(enriched_review.sentiment.document.label)");
         QueryResponse queryResponse = discovery.query(queryBuilder.build()).execute();
         return getInsightsServiceResponseMapper.mapGetInsightsServiceResponse(queryResponse);
@@ -58,7 +59,6 @@ public class UserReviewService implements IUserReviewsService {
         discovery.setEndPoint(discoveryServiceEndPoint);
         discovery.setUsernameAndPassword(discoveryServiceUsername, discoveryServicePassword);
         String environmentId = discoveryServiceEnvironmentId;
-        String collectionName = review.getLocation().buildCollectionName();
         String collectionId = collectionIdDictionary.getCollectionIdByName(collectionName);
         Gson gson = new Gson();
         String documentJson = gson.toJson(review, UserReview.class);

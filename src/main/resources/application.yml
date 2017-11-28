@@ -6,7 +6,7 @@ googlePlacesApi:
   placeAutocomplete:
     endpoint: https://maps.googleapis.com/maps/api/place/autocomplete/json
   placeSearch:
-    endpoint: https://maps.googleapis.com/maps/api/place/nearbysearch/json
+    endpoint: https://maps.googleapis.com/maps/api/place/textsearch/json
   placeDetails:
     endpoint: https://maps.googleapis.com/maps/api/place/details/json
 
@@ -42,11 +42,8 @@ watsonCloudService:
     environmentId: 4f3bfd84-164e-4763-a7b5-b40381cfa401
     collections:
       columbus-OH-US:
-        name: columbus-OH-US
-        id: 3fa9d27c-f9a2-4c6b-9598-cac3705ddc60
-
-destinationCategory:
-  restaurant: sw_dest_category_restaurant
+        name: seeworld-user-reviews
+        id: 786722ca-8682-4bd6-9749-94423a7081c8
 
 appContext:
   booleanClassification: sw_boolean_classification

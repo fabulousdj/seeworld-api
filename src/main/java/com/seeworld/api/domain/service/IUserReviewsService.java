@@ -1,11 +1,11 @@
 package com.seeworld.api.domain.service;
 
 import com.seeworld.api.domain.valueobject.GetInsightsServiceResponse;
-import com.seeworld.api.domain.valueobject.LocationInfo;
+import com.seeworld.api.domain.valueobject.PlaceInfo;
 import com.seeworld.api.domain.valueobject.UserReview;
 import com.seeworld.api.domain.valueobject.PostUserReviewServiceResponse;
 
 public interface IUserReviewsService {
-    GetInsightsServiceResponse getInsights(LocationInfo destination);
+    GetInsightsServiceResponse getInsights(String placeId);
     PostUserReviewServiceResponse postReview(UserReview review);
 }

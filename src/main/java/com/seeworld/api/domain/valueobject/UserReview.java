@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserReview {
-    private LocationInfo location;
+    private PlaceInfo location;
     private String review;
 
     public String getReview() {
@@ -15,11 +15,11 @@ public class UserReview {
         this.review = review;
     }
 
-    public LocationInfo getLocation() {
+    public PlaceInfo getLocation() {
         return location;
     }
 
-    public void setLocation(LocationInfo location) {
+    public void setLocation(PlaceInfo location) {
         this.location = location;
     }
 }
