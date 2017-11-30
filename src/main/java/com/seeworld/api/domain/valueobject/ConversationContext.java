@@ -3,6 +3,8 @@ package com.seeworld.api.domain.valueobject;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 public class ConversationContext {
     @JsonProperty("input")
@@ -22,7 +24,7 @@ public class ConversationContext {
     @JsonProperty("conversation_id")
     private String conversationId;
     @JsonProperty("system")
-    private ConversationSystemContext system;
+    private Map system;
 
     public String getPreviousDestination() {
         return previousDestination;
@@ -64,14 +66,6 @@ public class ConversationContext {
         this.conversationId = conversationId;
     }
 
-    public ConversationSystemContext getSystem() {
-        return system;
-    }
-
-    public void setSystem(ConversationSystemContext system) {
-        this.system = system;
-    }
-
     public boolean isShouldVerifyAddress() {
         return shouldVerifyAddress;
     }
@@ -94,5 +88,13 @@ public class ConversationContext {
 
     public void setNodeName(String nodeName) {
         this.nodeName = nodeName;
+    }
+
+    public Map getSystem() {
+        return system;
+    }
+
+    public void setSystem(Map system) {
+        this.system = system;
     }
 }

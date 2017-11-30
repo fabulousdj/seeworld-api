@@ -3,11 +3,12 @@ package com.seeworld.api.domain.valueobject;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Map;
 
 public class ConversationResponse {
 
     @JsonProperty("system")
-    private ConversationSystemContext systemContext;
+    private Map systemContext;
     @JsonProperty("nodeName")
     private String nodeName;
     @JsonProperty("input")
@@ -15,18 +16,18 @@ public class ConversationResponse {
     @JsonProperty("response")
     private List<String> response;
 
-    public ConversationResponse(ConversationSystemContext systemContext, String nodeName, String input, List<String> response) {
+    public ConversationResponse(Map systemContext, String nodeName, String input, List<String> response) {
         this.systemContext = systemContext;
         this.nodeName = nodeName;
         this.input = input;
         this.response = response;
     }
 
-    public ConversationSystemContext getSystemContext() {
+    public Map getSystemContext() {
         return systemContext;
     }
 
-    public void setSystemContext(ConversationSystemContext systemContext) {
+    public void setSystemContext(Map systemContext) {
         this.systemContext = systemContext;
     }
 
