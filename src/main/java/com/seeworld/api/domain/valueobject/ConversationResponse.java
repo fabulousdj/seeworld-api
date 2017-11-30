@@ -10,12 +10,15 @@ public class ConversationResponse {
     private ConversationSystemContext systemContext;
     @JsonProperty("nodeName")
     private String nodeName;
+    @JsonProperty("input")
+    private String input;
     @JsonProperty("response")
     private List<String> response;
 
-    public ConversationResponse(ConversationSystemContext systemContext, String nodeName, List<String> response) {
+    public ConversationResponse(ConversationSystemContext systemContext, String nodeName, String input, List<String> response) {
         this.systemContext = systemContext;
         this.nodeName = nodeName;
+        this.input = input;
         this.response = response;
     }
 
@@ -41,5 +44,13 @@ public class ConversationResponse {
 
     public void setResponse(List<String> response) {
         this.response = response;
+    }
+
+    public String getInput() {
+        return input;
+    }
+
+    public void setInput(String input) {
+        this.input = input;
     }
 }

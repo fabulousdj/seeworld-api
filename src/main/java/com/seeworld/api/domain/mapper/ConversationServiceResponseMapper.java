@@ -20,8 +20,9 @@ public class ConversationServiceResponseMapper {
         ConversationSystemContext systemContext = objectMapper.convertValue(
                 messageResponse.getContext().get("system"), ConversationSystemContext.class);
         String nodeName = (String) messageResponse.getContext().get("node_name");
+        String input = (String) messageResponse.getContext().get("input");
         List<String> responses = messageResponse.getText();
-        return new ConversationResponse(systemContext, nodeName, responses);
+        return new ConversationResponse(systemContext, nodeName, input, responses);
     }
 
 }
