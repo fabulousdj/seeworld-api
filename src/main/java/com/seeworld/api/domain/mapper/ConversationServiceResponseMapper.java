@@ -6,6 +6,7 @@ import com.seeworld.api.domain.valueobject.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class ConversationServiceResponseMapper {
@@ -17,8 +18,8 @@ public class ConversationServiceResponseMapper {
 
     private ConversationResponse buildConversationResponse(MessageResponse messageResponse) {
         ObjectMapper objectMapper = new ObjectMapper();
-        ConversationSystemContext systemContext = objectMapper.convertValue(
-                messageResponse.getContext().get("system"), ConversationSystemContext.class);
+        Map systemContext = objectMapper.convertValue(
+                messageResponse.getContext().get("system"), Map.class);
         String nodeName = (String) messageResponse.getContext().get("node_name");
         String input = (String) messageResponse.getContext().get("input");
         List<String> responses = messageResponse.getText();
