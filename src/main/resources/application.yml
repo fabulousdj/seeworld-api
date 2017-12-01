@@ -43,7 +43,7 @@ watsonCloudService:
     collections:
       columbus-OH-US:
         name: seeworld-user-reviews
-        id: 786722ca-8682-4bd6-9749-94423a7081c8
+        id: 92fbe5b3-7349-49d9-a5f5-cea069886688
 
 appContext:
   booleanClassification: sw_boolean_classification

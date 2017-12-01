@@ -63,43 +63,4 @@ public class NaturalLanguageProcessingService implements INaturalLanguageProcess
 
         return new NaturalLanguageClassificationServiceResponse(result);
     }
-
-    @Override
-    public NaturalLanguageUnderstandingServiceResponse understandDestination(String input) {
-        NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
-                NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27,
-                naturalLanguageUnderstandingServiceUsername,
-                naturalLanguageUnderstandingServicePassword);
-
-        KeywordsOptions keywordsOptions = new KeywordsOptions.Builder()
-                .emotion(true)
-                .sentiment(true)
-                .limit(2)
-                .build();
-
-        Features features = new Features.Builder()
-                .keywords(keywordsOptions)
-                .build();
-
-        AnalyzeOptions parameters = new AnalyzeOptions.Builder()
-                .text(input)
-                .features(features)
-                .build();
-
-        AnalysisResults response = service
-                .analyze(parameters)
-                .execute();
-
-        System.out.println(response);
-        List<KeywordsResult> keywordsResults = response.getKeywords();
-        StringBuilder destinationBuilder = new StringBuilder();
-        for (int i = 0; i < keywordsResults.size(); i++) {
-            KeywordsResult keyword = keywordsResults.get(i);
-            destinationBuilder.append(keyword.getText());
-            if (i < keywordsResults.size() - 1) {
-                destinationBuilder.append(" ");
-            }
-        }
-        return new NaturalLanguageUnderstandingServiceResponse(destinationBuilder.toString());
-    }
 }
