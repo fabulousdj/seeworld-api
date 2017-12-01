@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.Map;
 @Component
 public class PlaceSearchService implements IPlaceSearchService {
 
-    private static int SEARCH_RADIUS = 5000;
+    private static int SEARCH_RADIUS = 50000;
 
     @Value("${googlePlacesApi.apiKey}")
     private String apiKey;
@@ -29,28 +28,21 @@ public class PlaceSearchService implements IPlaceSearchService {
 
     @Override
     public PlaceSearchServiceResponse search(String input, float latitude, float longitude) {
-        UriComponentsBuilder builder = UriComponentsBuilder
-                .fromUriString(placeSearchEndpoint)
-                // Add query parameter
-                .queryParam("query", input)
-                .queryParam("location", latitude + "," + longitude)
-                .queryParam("radius", SEARCH_RADIUS)
-                .queryParam("language", "en_US")
-                .queryParam("key", apiKey);
-
+        String url = placeSearchEndpoint + "?input=" + input + "&location=" + latitude + "," + longitude +
+                "&radius=" + SEARCH_RADIUS + "&key=" + apiKey;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> response = restTemplate.getForEntity(builder.toUriString(), Map.class);
+        ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
 
         if(response.getStatusCode() == HttpStatus.BAD_REQUEST){
             return new PlaceSearchServiceResponse(new ErrorDetails(SystemEvent.HYSTRIX_BAD_REQUEST_ERROR.getId(),
                     "Google Places API place search service bad request."));
         }
 
-        List<PlaceInfo> placeSearchResults = getPlaceDetails(response.getBody());
+        List<PlaceInfo> placeSearchResults = getPlaceSummary(response.getBody());
         return new PlaceSearchServiceResponse(placeSearchResults);
     }
 
-    private List<PlaceInfo> getPlaceDetails(Map responseBody) {
+    private List<PlaceInfo> getPlaceSummary(Map responseBody) {
         List<PlaceInfo> placeSearchResults = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
         List predictions = objectMapper.convertValue(responseBody.get("results"), List.class);
