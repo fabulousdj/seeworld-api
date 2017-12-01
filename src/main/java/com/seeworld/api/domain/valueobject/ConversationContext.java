@@ -21,6 +21,8 @@ public class ConversationContext {
     private boolean shouldVerifyAddress;
     @JsonProperty("node_name")
     private String nodeName;
+    @JsonProperty("address")
+    private String completeAddress;
     @JsonProperty("conversation_id")
     private String conversationId;
     @JsonProperty("system")
@@ -96,5 +98,13 @@ public class ConversationContext {
 
     public void setSystem(Map system) {
         this.system = system;
+    }
+
+    public String getCompleteAddress() {
+        return completeAddress;
+    }
+
+    public void setCompleteAddress(String completeAddress) {
+        this.completeAddress = completeAddress;
     }
 }
