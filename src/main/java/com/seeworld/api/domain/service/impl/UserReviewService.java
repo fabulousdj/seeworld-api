@@ -47,7 +47,7 @@ public class UserReviewService implements IUserReviewsService {
         String collectionId = collectionIdDictionary.getCollectionIdByName(collectionName);
 
         QueryRequest.Builder queryBuilder = new QueryRequest.Builder(environmentId, collectionId);
-        queryBuilder.query("location.placeId::\"" + placeId + "\"");
+        queryBuilder.query("place_id::\"" + placeId + "\"");
         queryBuilder.aggregation("term(enriched_review.sentiment.document.label)");
         QueryResponse queryResponse = discovery.query(queryBuilder.build()).execute();
         return getInsightsServiceResponseMapper.mapGetInsightsServiceResponse(queryResponse);

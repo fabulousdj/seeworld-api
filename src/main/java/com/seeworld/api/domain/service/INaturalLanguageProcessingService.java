@@ -5,5 +5,4 @@ import com.seeworld.api.domain.valueobject.NaturalLanguageUnderstandingServiceRe
 
 public interface INaturalLanguageProcessingService {
     NaturalLanguageClassificationServiceResponse classify(String input, String appState);
-    NaturalLanguageUnderstandingServiceResponse understandDestination(String input);
 }

@@ -1,10 +1,14 @@
 package com.seeworld.api.domain.valueobject;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserReview {
-    private PlaceInfo location;
+    @SerializedName("place_id")
+    @JsonProperty("place_id")
+    private String placeId;
     private String review;
 
     public String getReview() {
@@ -15,11 +19,11 @@ public class UserReview {
         this.review = review;
     }
 
-    public PlaceInfo getLocation() {
-        return location;
+    public String getPlaceId() {
+        return placeId;
     }
 
-    public void setLocation(PlaceInfo location) {
-        this.location = location;
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 }
