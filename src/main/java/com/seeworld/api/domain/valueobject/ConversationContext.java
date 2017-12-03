@@ -23,6 +23,8 @@ public class ConversationContext {
     private boolean isCallSuccessful;
     @JsonProperty("node_name")
     private String nodeName;
+    @JsonProperty("dest_name")
+    private String destinationName;
     @JsonProperty("address")
     private String completeAddress;
     @JsonProperty("conversation_id")
@@ -116,5 +118,13 @@ public class ConversationContext {
 
     public void setCallSuccessful(boolean callSuccessful) {
         isCallSuccessful = callSuccessful;
+    }
+
+    public String getDestinationName() {
+        return destinationName;
+    }
+
+    public void setDestinationName(String destinationName) {
+        this.destinationName = destinationName;
     }
 }
