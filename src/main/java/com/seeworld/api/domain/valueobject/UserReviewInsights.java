@@ -18,9 +18,15 @@ public class UserReviewInsights {
 
     public UserReviewInsights(long count, long positiveCount, long negativeCount, long neutralCount) {
         this.count = count;
-        this.positivePercentage = round(((float)positiveCount) / count, SECOND_DECIMAL_PLACE);
-        this.negativePercentage = round(((float)negativeCount) / count, SECOND_DECIMAL_PLACE);
-        this.neutralPercentage = round(((float)neutralCount) / count, SECOND_DECIMAL_PLACE);
+        if (count == 0) {
+            this.positivePercentage = 0;
+            this.neutralPercentage = 0;
+            this.negativePercentage = 0;
+        } else {
+            this.positivePercentage = round(((float)positiveCount) / count, SECOND_DECIMAL_PLACE);
+            this.negativePercentage = round(((float)negativeCount) / count, SECOND_DECIMAL_PLACE);
+            this.neutralPercentage = round(((float)neutralCount) / count, SECOND_DECIMAL_PLACE);
+        }
     }
 
     public static float round(float d, int decimalPlace) {
