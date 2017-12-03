@@ -19,6 +19,8 @@ public class ConversationContext {
     private boolean isReviewValid;
     @JsonProperty("verifyAdd")
     private boolean shouldVerifyAddress;
+    @JsonProperty("callSucceeded")
+    private boolean isCallSuccessful;
     @JsonProperty("node_name")
     private String nodeName;
     @JsonProperty("address")
@@ -106,5 +108,13 @@ public class ConversationContext {
 
     public void setCompleteAddress(String completeAddress) {
         this.completeAddress = completeAddress;
+    }
+
+    public boolean isCallSuccessful() {
+        return isCallSuccessful;
+    }
+
+    public void setCallSuccessful(boolean callSuccessful) {
+        isCallSuccessful = callSuccessful;
     }
 }
